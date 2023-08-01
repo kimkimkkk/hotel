@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+<head>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+<th:block layout:fragment="css">
+	<style>
+.swiper {
+	width: 100%;
+	height: 100%;
+}
+
+.swiper-slide {
+	text-align: center;
+	font-size: 18px;
+	background: #fff;
+	display: flex;
+	justify-content: center;
+	align-facilitiess: center;
+}
+
+.swiper-slide img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.swiper {
+	width: 100%;
+	height: 300px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.good {
+	font-weight: bold;
+	color: #7e7b56d6;
+	margin: 0 auto;
+}
+
+.swiper-slide {
+	background-size: cover;
+	background-position: center;
+}
+
+.detailbar {
+	width: 48%;
+	margin: 0 auto;
+	padding-bottom: 30px;
+	padding-top: 20px
+}
+
+.mySwiper2 {
+	height: 80%;
+	width: 100%;
+}
+
+.mySwiper {
+	height: 20%;
+	box-sizing: border-box;
+	padding: 10px 0;
+}
+
+.mySwiper .swiper-slide {
+	width: 25%;
+	height: 100%;
+	opacity: 0.4;
+}
+
+.asd {
+	width: 50%;
+	margin: 0 auto;
+}
+
+.mySwiper .swiper-slide-thumb-active {
+	opacity: 1;
+}
+
+.goodbg {
+	background-color: #faebd778;
+	text-align: center;
+	padding: 50px 0;
+}
+
+.swiper-slide img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+</style>
+</th:block>
+
+<div layout:fragment="content">
+	<div class="bg-light py-3">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 mb-0 header_margin">
+					<a href="/">Home</a> <span class="mx-2 mb-0">/</span> <strong
+						class="text-black">이용시설 상세</strong>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="site-section">
+		<div class="container">
+			<div class="row">
+				<input type="hidden" id="facilitiesId" th:value="${facilities.id}">
+
+				<div class="asd">
+					<div
+						style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
+						class="swiper mySwiper2">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide"
+								th:each="facilitiesImg : ${facilities.facilitiesImgDtoList}">
+								<img th:if="${not #strings.isEmpty(facilitiesImg.imgUrl)}"
+									th:src="${facilitiesImg.imgUrl}" />
+							</div>
+						</div>
+						<div class="swiper-button-next"></div>
+						<div class="swiper-button-prev"></div>
+					</div>
+					<div thumbsSlider="" class="swiper mySwiper">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide"
+								th:each="facilitiesImg : ${facilities.facilitiesImgDtoList}">
+								<img th:if="${not #strings.isEmpty(facilitiesImg.imgUrl)}"
+									th:src="${facilitiesImg.imgUrl}">
+							</div>
+						</div>
+					</div>
+				</div>
+				<form role="form" action="/order" method="post"
+					th:object="${ReservationDto}">
+					<input type="hidden" th:value="${facilities.id}" name="facilitiesId">
+					<div class="col-md-6">
+						<span th:text="${facilities.itemStatus}"
+							class="badge badge-primary mgb-15"></span>
+						<h2 class="text-black" th:text="${facilities.facilitiesNm}"></h2>
+						<p>
+							<input type="hidden" id="price" name="price"
+								th:value="${facilities.price}"> <strong
+								class="text-primary h4"
+								th:text="|${#numbers.formatInteger(facilities.price, 0, 'COMMA')}원|"></strong>
+						</p>
+						<div>
+							<label for="startDay">체크인 날짜</label> 
+							<!-- <input type="date" id="checkIn" name="startDay" onchange="calculateTotalPrice()"> -->
+						</div>
+						<div>
+							<h5
+								style="display: inline-block; margin-right: 15px; color: black; font-weight: bold; width: 110%;">총
+								상품 금액</h5>
+							<input type="hidden" id="Tprice" th:field="*{tprice}">
+							<h2 id="totalPrice" class="text-primary h4"></h2>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-12">
+							<button type="submit">예약하기</button>
+							<input type="hidden" th:name="${_csrf.parameterName}"
+								th:value="${_csrf.token}">
+						</div>
+					</div>
+
+
+
+					<p th:unless="${#strings.equals(facilities.itemStatus, 'SELL')}">해당
+						상품은 현재 품절입니다.</p>
+				</form>
+			</div>
+		</div>
+	</div>
+	<p class="goodbg">
+		<span class="good">이용시간 :</span> <span
+			th:text="${facilities.startTime} +' ~ '+ ${facilities.endTime}"></span>
+		<span>&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;</span> <span class="good">
+			휴일 :</span> <span th:text="${facilities.holiday}"></span> <span>&nbsp;&nbsp;&nbsp;|
+			&nbsp;&nbsp;&nbsp;</span> <span class="good"> 위치 :</span> <span
+			th:text="${facilities.address}"></span> <span>&nbsp;&nbsp;&nbsp;|
+			&nbsp;&nbsp;&nbsp;</span> <span class="good"> 연령제한 :</span> <span
+			th:text="${facilities.age}"></span>
+	</p>
+	<div class="site-section block-3 site-blocks-2">
+		<div class="container detailbar">
+			<div class="row justify-content-center">
+				<div class="col-md-7 site-section-heading text-center pt-4">
+					<h2>이용시설 설명</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<p style="white-space: pre-wrap;"
+						th:text="${facilities.facilitiesDetail}"></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 각 페이지의 스크립트가 작성될 위치 -->
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		var swiper = new Swiper(".mySwiper", {
+			spaceBetween : 10,
+			slidesPerView : 4,
+			freeMode : true,
+			watchSlidesProgress : true,
+		});
+		var swiper2 = new Swiper(".mySwiper2", {
+			spaceBetween : 10,
+			navigation : {
+				nextEl : ".swiper-button-next",
+				prevEl : ".swiper-button-prev",
+			},
+			thumbs : {
+				swiper : swiper,
+			},
+		});
+
+		$(document).ready(function() {
+			//처음 상세페이지 화면에 들어올때 총 상품금액이 보여야 하므로
+			calculateTotalPrice();
+
+			//수량 -,+ 버튼을 누를때마다 총가격을 구한다.
+			$(".count_btn").click(function() {
+				calculateTotalPrice();
+			})
+
+		});
+
+		function calculateTotalPrice() {
+			var count = $("#count").val();//수량
+			var price = $("#price").val();//가격
+			var totalPrice = (price * count).toLocaleString('ko-KR'); //천단위 콤마
+
+			$("#totalPrice").html(totalPrice + '원'); //총가격 출력
+		}
+
+		function order() {
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+
+			var url = "/order";
+
+			//controller(서버)에 전달할 데이터
+			var paramData = {
+				facilitiesId : $("#facilitiesId").val(), //facilities의 ID
+				count : $("#count").val()
+			// 수량
+			}
+
+			//전달하기전에 데이터를 json => 문자열로 만들어야 한다/
+
+			var param = JSON.stringify(paramData);
+
+			$.ajax({
+				url : url,
+				type : "POST",
+				contentType : "application/json",
+				data : param, //서버에 전송할 데이터
+				beforeSend : function(xhr) {
+					//데이터를 전송하기전에 헤더에 csrf값을 설정
+					xhr.setRequestHeader(header, token);
+
+				},
+				dataType : "json",
+				cache : false,
+				success : function(result, status) {
+					alert("주문이 완료 됐다.");
+					//location.href='/';
+				},
+				error : function(jqXHR, status, error) {
+					if (jqXHR.status == '401') {
+						alert('로그인 후 사용해주세요')
+						location.href = '/members/login';
+					} else {
+						alert(jqXHR.responseText);//에러 메세지 출력
+					}
+				}
+			});
+		}
+	</script>
+
+</th:block>
+
+</html>

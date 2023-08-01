@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div class="site-navbar bg-white" th:fragment="header">
+	<div class="header">
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col logo_section">
+					<div class="full">
+						<div class="center-desk">
+							<div class="logo">
+								<a href="/"><img src="/images/a.png" alt="#" class="logoimg" /></a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 ">
+					<nav class="navbar navigation navbar-expand-md navbar-dark menubar">
+						<button class="navbar-toggler" type="button"
+							data-toggle="collapse" data-target="#navbarsExample04"
+							aria-controls="navbarsExample04" aria-expanded="false"
+							aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+						<ul
+							class="nav col-12 col-md-auto justify-content-center collapse navbar-collapse"
+							id="navbarsExample04">
+							<li class="nav-item has-children active"
+								sec:authorize="hasAnyAuthority('ROLE_ADMIN')"><a
+								class="nav-link dropdown-toggle" href="/" id="adminMenuDropdown"
+								role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">관리자 메뉴</a>
+								<div class="dropdown-menu" aria-labelledby="adminMenuDropdown">
+									<a class="dropdown-item" href="/admin/item/new">객실 등록</a> <a
+										class="dropdown-item" href="/admin/items">객실 관리</a> <a
+										class="dropdown-item" href="/admin/facilities/new">이용시설 등록</a>
+									<a class="dropdown-item" href="/admin/facilitiess">이용시설 관리</a>
+								</div>
+							<li class="nav-item"><a class="nav-link" href="/">홈페이지</a></li>
+							<li class="nav-item"><a class="nav-link" href="/item/room">객실</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="/facilities/facilities">이용시설</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="/inquirys/inquiry" sec:authorize="hasAnyAuthority('ROLE_USER')">문의하기</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="/admin/inquirys" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">문의함</a></li>
+								
+							<li class="nav-item"><a class="nav-link"
+								href="/members/myPage" sec:authorize="isAuthenticated()">마이페이지</a></li>
+							<li class="nav-item"><a class="nav-link" href="/order">예약하기</a>
+							<li class="nav-item"><a class="nav-link"
+								href="/members/login" sec:authorize="isAnonymous()">로그인</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="/members/logout" sec:authorize="isAuthenticated()">로그아웃</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</html>

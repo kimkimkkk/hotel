@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<!-- 각 페이지의 CSS가 작성될 위치 -->
+<th:block layout:fragment="css">
+	<head>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+	</head>
+<style>
+.h3{
+border-bottom: 5px solid #6c757d;
+}
+.btn{
+margin-top: 100px;
+}
+.form-floating{
+margin-top: 50px
+}
+</style>
+</th:block>
+<div layout:fragment="content">
+	<div class="site-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 header_margin">
+					<h2 class="h3 mb-3 text-black">My Page</h2>
+					<form role="form" action="/members/myChange" method="post">
+						<div class="form-floating">
+							<input type="email" class="form-control" id="floatingInputValue"
+								readonly th:value="${member.email}" name="email"> <label
+								for="floatingInputValue">E-mail</label>
+						</div>
+						<div class="form-floating">
+							<input type="text" class="form-control" id="floatingInputValue" name="name"
+								 th:value="${member.name}"> <label
+								for="floatingInputValue">Name</label>
+						</div>
+						<div class="form-floating">
+							<input type="text" class="form-control" id="floatingInputValue" name="address"
+								 th:value="${member.address}"> <label
+								for="floatingInputValue">Address</label>
+						</div>
+						<div class="form-floating">
+							<input type="password" class="form-control" id="floatingInputValue" name="password"> <label
+								for="floatingInputValue"  >변경할 비밀번호를 입력해주세요.</label>
+						</div>
+						<button type="submit"  class="btn btn-secondary">저장하기</button>
+						<input type="hidden" th:name="${_csrf.parameterName}"
+							th:value="${_csrf.token}">
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 각 페이지의 스크립트가 작성될 위치 -->
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		
+	</script>
+</th:block>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<th:block layout:fragment="css">
+	<style>
+</style>
+</th:block>
+
+<div layout:fragment="content">
+	<div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 header_margin">
+					<div class="titlepage">
+						<p class="margin_0">강원도 최고의 호텔, 강원호텔에 오신걸 환영합니다.</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div th:each="facilities, status: ${facilitiess.getContent()}" class="aaas">
+					<div class="col-md-4 col-sm-6">
+						<div id="serv_hover" class="room">
+							<div class="room_img">
+								<a th:href="'/facilities/' + ${facilities.id}"> <img
+									th:src="${facilities.imgUrl}" th:alt="${facilities.facilitiesNm}" height="280px"
+									width="150px" class="roomImg" />
+								</a>
+							</div>
+							<div class="bed_room ">
+								<a class="romom" th:href="'/facilities/' + ${facilities.id}" th:text="${facilities.facilitiesNm}" />
+								<a th:href="'/facilities/' + ${facilities.id}" th:text="${facilities.price}" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 각 페이지의 스크립트가 작성될 위치 -->
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		
+	</script>
+
+</th:block>
+
+</html>

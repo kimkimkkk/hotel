@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<!-- 각 페이지의 CSS가 작성될 위치 -->
+<th:block layout:fragment="css">
+	<style>
+.fieldError {
+	color: #bd2130;
+}
+
+.site-section {
+	padding-top: 500px;
+}
+
+.asd {
+	width: 100px;
+	height: 100px;
+}
+</style>
+<head>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+</th:block>
+<div layout:fragment="content">
+	<div class="site-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 header_margin">
+					<h2 class="h3 mb-3 text-black">비밀번호 찾기</h2>
+					<form role="form" action="/emailConfirm" method="post">
+						<input id="email" name="email">
+						<button class="asd" type="submit"></button>
+						<input type="hidden" th:name="${_csrf.parameterName}"
+							th:value="${_csrf.token}">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 각 페이지의 스크립트가 작성될 위치 -->
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+	
+	</script>
+</th:block>
+</html>
