@@ -37,7 +37,7 @@ public class Inquiry {
 	@Column(nullable = false, columnDefinition = "longtext")
 	private String content;
 	
-	private String Email;
+	private String email;
 	
 	@Enumerated(EnumType.STRING)
 	private State state;

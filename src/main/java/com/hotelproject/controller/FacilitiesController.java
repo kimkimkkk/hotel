@@ -17,48 +17,51 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.hotelproject.dto.FacilitiesFormDto;
 import com.hotelproject.dto.FacilitiesSearchDto;
+import com.hotelproject.dto.ItemFormDto;
 import com.hotelproject.dto.MainFacilitiesDto;
 import com.hotelproject.dto.ReservationDto;
 import com.hotelproject.entity.Facilities;
+import com.hotelproject.repository.ReservationRepository;
 import com.hotelproject.service.FacilitiesService;
+import com.hotelproject.service.ReservationService;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor; 
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
 public class FacilitiesController {
 	private final FacilitiesService facilitiesService;
-
-	// 객실전체 리스트(헤더부분)
+	private final ReservationService reservationService;
+	// 이용시설 리스트(헤더부분)
 	@GetMapping(value = "/facilities/facilities")
 	public String facilitiesShopList(Model model, FacilitiesSearchDto facilitiesSearchDto, Optional<Integer> page) {
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 6);
 		Page<MainFacilitiesDto> facilitiess = facilitiesService.getMainFacilitiesPage(facilitiesSearchDto, pageable);
 		model.addAttribute("facilitiess", facilitiess);
-		model.addAttribute("facilitiesSearchDto",facilitiesSearchDto);
+		model.addAttribute("facilitiesSearchDto", facilitiesSearchDto);
 		model.addAttribute("maxPage", 5);
 		return "facilities/facilities";
 	}
 
-	// 상품 상세 페이지
+	// 이용시설 상세 페이지
 	@GetMapping(value = "/facilities/{facilitiesId}")
 	public String FacilitiesDtl(Model model, @PathVariable("facilitiesId") Long facilitiesId) {
 		FacilitiesFormDto facilitiesFormDto = facilitiesService.getFacilitiesDtl(facilitiesId);
-		
+
 		model.addAttribute("ReservationDto", new ReservationDto());
 		model.addAttribute("facilities", facilitiesFormDto);
 		return "facilities/facilitiesDtl";
 	}
 
-	// 상품등록 페이지
+	// 이용시설 페이지
 	@GetMapping(value = "/admin/facilities/new")
 	public String facilitiesForm(Model model) {
 		model.addAttribute("facilitiesFormDto", new FacilitiesFormDto());
 		return "facilities/facilitiesForm";
 	}
 
-	// 상품, 상품이미지 등록(insert)
+	// 이용시설, 이용시설이미지 등록(insert)
 	@PostMapping(value = "/admin/facilities/new")
 	public String facilitiesNew(@Valid FacilitiesFormDto facilitiesFormDto, BindingResult bindingResult, Model model,
 			@RequestParam("facilitiesImgFile") List<MultipartFile> facilitiesImgFileList) {
@@ -81,9 +84,10 @@ public class FacilitiesController {
 		return "redirect:/";
 	}
 
-	// 상품 관리 페이지
+	// 이용시설 관리 페이지
 	@GetMapping(value = { "/admin/facilitiess", "/admin/facilitiess/{page}" })
-	public String facilitiesManage(FacilitiesSearchDto facilitiesSearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
+	public String facilitiesManage(FacilitiesSearchDto facilitiesSearchDto,
+			@PathVariable("page") Optional<Integer> page, Model model) {
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 3);
 		Page<Facilities> facilitiess = facilitiesService.getAdminFacilitiesPage(facilitiesSearchDto, pageable);
 		model.addAttribute("Facilitiess", facilitiess);
@@ -93,7 +97,7 @@ public class FacilitiesController {
 		return "facilities/facilitiesMng";
 	}
 
-	// 상품 수정페이지 보기
+	// 이용시설 수정페이지 보기
 	@GetMapping(value = "/admin/Facilities/{FacilitiesId}")
 	public String facilitiesDtl(@PathVariable("FacilitiesId") Long facilitiesid, Model model) {
 		try {
@@ -109,7 +113,7 @@ public class FacilitiesController {
 		return "facilities/facilitiesModifyFrom";
 	}
 
-	// 상품 수정
+	// 이용시설 수정
 	@PostMapping(value = "/admin/facilities{facilitiesId}")
 	public String facilitiesUpdate(@Valid FacilitiesFormDto facilitiesFormDto, Model model, BindingResult bindingResult,
 			@RequestParam("facilitiesImgFile") List<MultipartFile> facilitiesImgFilesList) {
@@ -131,5 +135,11 @@ public class FacilitiesController {
 		}
 		return "redirect:/";
 	}
-}
 
+	@GetMapping(value = "/admin/Facilities/delete/{FacilitiesId}")
+	public String Facilitiesdelete(@PathVariable("FacilitiesId") Long facilitiesId, Model model) {
+		reservationService.deletFacilities(facilitiesId);
+		facilitiesService.deleteByFacilitiesIdByNative(facilitiesId);
+		return  "redirect:/";
+	}
+}

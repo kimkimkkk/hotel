@@ -32,6 +32,8 @@ public class ReservationController {
 
 	@PostMapping(value = "/order")
 	public String order(@Valid ReservationDto reservationDto, BindingResult bindingResult, Principal principal, @RequestParam("itemId") Long ItemId, @RequestParam("facilitiesId") Long FacilitiesId) {
+		
+		System.out.println("ssssssssssssssss");
 		if (bindingResult.hasErrors()) {
 			StringBuilder sb = new StringBuilder();
 			List<FieldError> fieldErrors = bindingResult.getFieldErrors();
@@ -44,12 +46,8 @@ public class ReservationController {
 		
 		String email = principal.getName(); // id에 해당하는 정보를 가지고 온다.
 		Long itemId = ItemId;
-		
+		Long facilitiesId = FacilitiesId;
 		// Principal: 로그인한 사용자의 정보를 가져올수있다
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate startDate = LocalDate.parse(reservationDto.getStartDay(), formatter);
-        LocalDate endDate = LocalDate.parse(reservationDto.getEndDay(), formatter);
-        long daysBetween = endDate.toEpochDay() - startDate.toEpochDay(); //두 날짜 차이 구하기.
         
         
         
@@ -57,12 +55,16 @@ public class ReservationController {
 			if(itemId > 0) {
 				Item item = reservationService.setItem(itemId);
 				reservationDto.setItemId(item);
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+				LocalDate startDate = LocalDate.parse(reservationDto.getStartDay(), formatter);
+		        LocalDate endDate = LocalDate.parse(reservationDto.getEndDay(), formatter);
+		        long daysBetween = endDate.toEpochDay() - startDate.toEpochDay(); //두 날짜 차이 구하기.
+		        reservationDto.setNight(daysBetween);
 			}
-			if(FacilitiesId > 0) {
+			if(facilitiesId > 0) {
 				Facilities facilities = reservationService.setFacilities(FacilitiesId);
 				reservationDto.setFacilities(facilities);
 			}
-			reservationDto.setNight(daysBetween);
 			reservationService.order(reservationDto, email); // 주문하기 실행
 		} catch (IllegalStateException e) {
 			e.printStackTrace();

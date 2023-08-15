@@ -1,6 +1,7 @@
 package com.hotelproject.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -11,9 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hotelproject.dto.MemberFormDto;
+import com.hotelproject.entity.Inquiry;
 import com.hotelproject.entity.Member;
 import com.hotelproject.service.EmailService;
 import com.hotelproject.service.EmailServiceImpl;
+import com.hotelproject.service.InquiryService;
 import com.hotelproject.service.MemberService;
 
 import jakarta.validation.Valid;
@@ -25,6 +28,7 @@ public class MemberController {
 	private final MemberService memberService;
 	private final PasswordEncoder passwordEncoder;
 	private final EmailService emailService;
+	private final InquiryService inquiryService;
 	// 로그인
 	@GetMapping(value = "/members/login")
 	public String login() {
@@ -97,7 +101,10 @@ public class MemberController {
 	@GetMapping(value = "/members/myPage")
 	public String passwordChange(Model model, Principal principal) {
 		Member member = memberService.findMember(principal.getName());
+		
+		List<Inquiry> inquiries = inquiryService.getInquiry(principal.getName());
 		model.addAttribute("member",member);
+		model.addAttribute("inquiries",inquiries);
 		
 		return "member/mypage";
 	}

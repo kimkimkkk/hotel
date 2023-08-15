@@ -51,7 +51,11 @@ margin-top: 50px
 						<input type="hidden" th:name="${_csrf.parameterName}"
 							th:value="${_csrf.token}">
 					</form>
-
+					<div th:each="inquiry, status: ${inquiries.getContent()}">
+						<div>
+							123
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

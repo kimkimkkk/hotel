@@ -28,9 +28,8 @@ public class ReservationService {
 	private final ItemRepository itemRepository;
 	private final MemberRepository memberRepository;
 	private final ItemImgRepository itemImgRepository;
-	private final FacilitiesRepository facilitiesRepository; 
-	
-	
+	private final FacilitiesRepository facilitiesRepository;
+
 	public Reservation saveReservation(Reservation reservation) {
 		Reservation saveReservation;
 		saveReservation = reservationRepository.save(reservation);
@@ -41,20 +40,20 @@ public class ReservationService {
 	public Item setItem(Long itemId) {
 		Item item = itemRepository.findById(itemId).orElseThrow(EntityNotFoundException::new);
 		Facilities facilities = facilitiesRepository.findById(itemId).orElseThrow(EntityNotFoundException::new);
-		
+
 		return item;
 	}
+
 	public Facilities setFacilities(Long facilitieId) {
 		Facilities facilities = facilitiesRepository.findById(facilitieId).orElseThrow(EntityNotFoundException::new);
-		
+
 		return facilities;
 	}
-	
+
 	public Long order(ReservationDto orderDto, String email) {
 		List<Reservation> orderItemList = new ArrayList<>();
-		Reservation orderItem = Reservation.createorder(orderDto,email);
+		Reservation orderItem = Reservation.createorder(orderDto, email);
 		orderItemList.add(orderItem);
-
 
 		reservationRepository.save(orderItem);
 
@@ -62,5 +61,12 @@ public class ReservationService {
 
 	}
 
+	public void deletFacilities(Long facilitiesId) {
+		reservationRepository.deleteByfacilitiesId(facilitiesId);
+	}
 
+	public void deletItems(Long itemId) {
+		reservationRepository.deleteByitemId(itemId);
+
+	}
 }

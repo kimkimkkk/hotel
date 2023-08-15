@@ -97,6 +97,9 @@ public class ItemService {
 		Page<MainItemDto> itemPage = itemRepository.getMainItemPage(itemSearchDto, pageable);
 		return itemPage;
 	}
+	public void deleteByitemIdByNative(long itemId) {
+		itemRepository.deleteByitemIdByNative(itemId);
+	}
 	/*
 	 * @Transactional(readOnly = true) public List<ItemRankDto> getItemRankList() {
 	 * return itemRepository.getItemRankList(); }

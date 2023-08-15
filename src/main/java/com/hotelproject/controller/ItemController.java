@@ -21,6 +21,7 @@ import com.hotelproject.dto.MainItemDto;
 import com.hotelproject.dto.ReservationDto;
 import com.hotelproject.entity.Item;
 import com.hotelproject.service.ItemService;
+import com.hotelproject.service.ReservationService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor; 
@@ -29,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ItemController {
 	private final ItemService itemService;
+	private final ReservationService reservationService;
 
 	// 객실전체 리스트(헤더부분)
 	@GetMapping(value = "/item/room")
@@ -133,4 +135,11 @@ public class ItemController {
 		}
 		return "redirect:/";
 	}
+	@GetMapping(value = "/admin/item/delete/{itemId}")
+	public String Facilitiesdelete(@PathVariable("itemId") Long itemId, Model model) {
+		reservationService.deletItems(itemId);
+		itemService.deleteByitemIdByNative(itemId);
+		return  "redirect:/";
+	}
+	
 }

@@ -54,6 +54,9 @@
 						      </td>
 						      <td th:text="${Facilities.ItemStatus}"></td>
 						      <td th:text="${Facilities.price}"></td>
+							  <td>
+								<a th:href="'/admin/Facilities/delete/' + ${Facilities.id}"> 삭제하기 </a>
+							</td>
 						    </tr>
 						  </tbody>
 						</table>

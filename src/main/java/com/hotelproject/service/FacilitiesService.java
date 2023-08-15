@@ -97,6 +97,10 @@ public class FacilitiesService {
 		Page<MainFacilitiesDto> facilitiesPage = facilitiesRepository.getMainFacilitiesPage(facilitiesSearchDto, pageable);
 		return facilitiesPage;
 	}
+
+	public void deleteByFacilitiesIdByNative(long facilitiesId) {
+		facilitiesRepository.deleteByFacilitiesIdByNative(facilitiesId);
+	}
 	/*
 	 * @Transactional(readOnly = true) public List<facilitiesRankDto> getfacilitiesRankList() {
 	 * return facilitiesRepository.getfacilitiesRankList(); }

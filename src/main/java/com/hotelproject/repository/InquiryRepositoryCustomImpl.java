@@ -49,7 +49,7 @@ public class InquiryRepositoryCustomImpl implements InquiryRepositoryCustom {
 
 	private BooleanExpression searchByLike(String searchBy, String searchQuery) {
 		if (StringUtils.equals("email", searchBy)) {
-			return QInquiry.inquiry.Email.like("%" + searchQuery + "%"); // create_by like %검색어%
+			return QInquiry.inquiry.email.like("%" + searchQuery + "%"); // create_by like %검색어%
 		}
 		return null;
 	}

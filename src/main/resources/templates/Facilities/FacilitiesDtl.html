@@ -139,6 +139,7 @@
 				<form role="form" action="/order" method="post"
 					th:object="${ReservationDto}">
 					<input type="hidden" th:value="${facilities.id}" name="facilitiesId">
+					<input type="hidden" th:value="0" name="itemId">
 					<div class="col-md-6">
 						<span th:text="${facilities.itemStatus}"
 							class="badge badge-primary mgb-15"></span>
