@@ -43,6 +43,7 @@
 						      <th scope="col">상품명</th>
 						      <th scope="col">상태</th>
 						      <th scope="col">가격</th>
+						      <th scope="col"></th>
 						    </tr>
 						  </thead>
 						  <tbody>
@@ -89,13 +90,11 @@
 							 th:object="${itemSearchDto}" style="height: 40px;">
 							<div class="col-lg-2"></div>
 							<div class="col-lg-5" style="display: flex;">
-								<!-- 상품판매 상태 -->
 								<select class="form-control">
 									<option value="">판매상태(전체)</option>
 									<option value="SELL">판매</option>
 									<option value="SOLD_OUT">품절</option>
 								</select>
-								<!-- 상품명 선택 -->
 								<select th:field="*{searchBy}" class="form-control">
 									<option value="itemNm">상품명</option>
 								</select>

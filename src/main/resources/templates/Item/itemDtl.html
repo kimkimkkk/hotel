@@ -202,10 +202,9 @@
 		<span class="good">전망 :</span> <span th:text="${item.view}"></span> <span>&nbsp;&nbsp;&nbsp;|
 			&nbsp;&nbsp;&nbsp; </span> <span class="good"> 침대 사이즈 :</span> <span
 			th:text="${item.bedSize}"></span> <span>&nbsp;&nbsp;&nbsp;|
-			&nbsp;&nbsp;&nbsp;</span> <span class="good"> 침대 사이즈 :</span> <span
-			th:text="${item.bedSize}"></span> <span>&nbsp;&nbsp;&nbsp;|
-			&nbsp;&nbsp;&nbsp;</span> <span class="good"> 침대 사이즈 :</span> <span
-			th:text="${item.bedSize}"></span>
+			&nbsp;&nbsp;&nbsp;</span> <span class="good"> 방 사이즈 :</span> <span
+			th:text="${item.roomSize}"></span> <span>&nbsp;&nbsp;&nbsp;|
+			&nbsp;&nbsp;&nbsp;</span>
 	</p>
 
 	<div class="site-section block-3 site-blocks-2">
@@ -256,12 +255,14 @@
 					+ '원'; //천단위 콤마
 			if (count == '99') {
 				totalPrice = '0';
-			}
+				$("#totalPrice").html('문의 바랍니다.');
+			}else{
 			if ("1" >= totalPrice) {
 				totalPrice = "날짜를 확인해주세요";
 			}
 			$("#Tprice").val(totalPrice);
 			$("#totalPrice").html(totalPrice); //총가격 출력
+			}
 		}
 
 		function order() {

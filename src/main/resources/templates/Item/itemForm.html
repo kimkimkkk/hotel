@@ -5,10 +5,10 @@
 
 <th:block layout:fragment="css">
 	<style>
-	.fieldError {
-		color: #bd2130;
-	}
-	</style>
+.fieldError {
+	color: #bd2130;
+}
+</style>
 </th:block>
 
 
@@ -17,8 +17,8 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12 mb-0 header_margin">
-					<a href="/">Home</a> <span class="mx-2 mb-0">/</span> 
-					<strong class="text-black">객실 등록</strong>
+					<a href="/">Home</a> <span class="mx-2 mb-0">/</span> <strong
+						class="text-black">객실 등록</strong>
 				</div>
 			</div>
 		</div>
@@ -30,8 +30,9 @@
 				<div class="col-md-12">
 					<h2 class="h3 mb-3 text-black">객실 등록</h2>
 					<div class="p-3 p-lg-5 border">
-						<form role="form" action="/admin/item/new" method="post" enctype="multipart/form-data" 
-							th:object="${itemFormDto}" name="itemForm">
+						<form role="form" action="/admin/item/new" method="post"
+							enctype="multipart/form-data" th:object="${itemFormDto}"
+							name="itemForm">
 
 							<input type="hidden" th:field="*{id}" />
 
@@ -43,75 +44,84 @@
 									</select>
 								</div>
 							</div>
-
 							<div class="form-group row">
 								<div class="col-md-12">
-									<label th:for="itemNm" class="text-black">상품명</label>
-									<input type="text" class="form-control" th:field="*{itemNm}" placeholder="상품명 입력">
-									<p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}" class="fieldError">Incorrect Data</p>
+									<label th:for="itemNm" class="text-black">상품명</label> <input
+										type="text" class="form-control" th:field="*{itemNm}"
+										placeholder="상품명 입력">
+									<p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}"
+										class="fieldError">Incorrect Data</p>
 								</div>
 							</div>
 
 							<div class="form-group row">
 								<div class="col-md-12">
-									<label th:for="price" class="text-black">가격</label>
-									<input type="text" class="form-control" th:field="*{price}" placeholder="가격 입력" onkeyup="inputNumberFormat(this)">			
-									<p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="fieldError">Incorrect Data</p>
+									<label th:for="price" class="text-black">가격</label> <input
+										type="text" class="form-control" th:field="*{price}"
+										placeholder="가격 입력" onkeyup="inputNumberFormat(this)">
+									<p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
+										class="fieldError">Incorrect Data</p>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-12">
+									<label th:for="bedSize" class="text-black">침대 사이즈</label> <input
+										type="text" class="form-control" th:field="*{bedSize}"
+										placeholder="침대 사이즈입력">
+									<p th:if="${#fields.hasErrors('bedSize')}"
+										th:errors="*{bedSize}" class="fieldError">Incorrect Data</p>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-12">
+									<label th:for="view" class="text-black">전망</label> <input
+										type="text" class="form-control" th:field="*{view}"
+										placeholder="전망 입력">
+									<p th:if="${#fields.hasErrors('view')}" th:errors="*{view}"
+										class="fieldError">Incorrect Data</p>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-12">
+									<label th:for="roomSize" class="text-black">객실 사이즈</label> <input
+										type="text" class="form-control" th:field="*{roomSize}"
+										placeholder="객실 사이즈 입력">
+									<p th:if="${#fields.hasErrors('roomSize')}"
+										th:errors="*{roomSize}" class="fieldError">Incorrect Data</p>
 								</div>
 							</div>
 
 							<div class="form-group row">
 								<div class="col-md-12">
-									<label th:for="stockNumber" class="text-black">재고</label> 
-									<input type="text" class="form-control" th:field="*{stockNumber}" placeholder="재고 입력">
-									<p th:if="${#fields.hasErrors('stockNumber')}" th:errors="*{stockNumber}" class="fieldError">Incorrect Data</p>
+									<label th:for="itemDetail" class="text-black">상품 상세내용</label>
+									<textarea rows=10 class="form-control" placeholder="상품 상세내용"
+										th:field="*{itemDetail}" id="floatingTextarea"></textarea>
+									<p th:if="${#fields.hasErrors('itemDetail')}"
+										th:errors="*{itemDetail}" class="fieldError">Incorrect
+										Data</p>
 								</div>
 							</div>
-							<div class="form-group row">
+
+
+							<div class="form-group row"
+								th:if="${#lists.isEmpty(itemFormDto.itemImgDtoList)}"
+								th:each="num: ${#numbers.sequence(1,5)}">
 								<div class="col-md-12">
-									<label th:for="bedSize" class="text-black">침대 사이즈</label> 
-									<input type="text" class="form-control" th:field="*{bedSize}" placeholder="침대 사이즈입력">
-									<p th:if="${#fields.hasErrors('bedSize')}" th:errors="*{bedSize}" class="fieldError">Incorrect Data</p>
-								</div>
-							</div>
-							<div class="form-group row">
-								<div class="col-md-12">
-									<label th:for="view" class="text-black">전망</label> 
-									<input type="text" class="form-control" th:field="*{view}" placeholder="전망 입력">
-									<p th:if="${#fields.hasErrors('view')}" th:errors="*{view}" class="fieldError">Incorrect Data</p>
-								</div>
-							</div>
-							<div class="form-group row">
-								<div class="col-md-12">
-									<label th:for="roomSize" class="text-black">객실 사이즈</label> 
-									<input type="text" class="form-control" th:field="*{roomSize}" placeholder="객실 사이즈 입력">
-									<p th:if="${#fields.hasErrors('roomSize')}" th:errors="*{roomSize}" class="fieldError">Incorrect Data</p>
-								</div>
-							</div>
-							
-							<div class="form-group row">
-								<div class="col-md-12">
-									<label th:for="itemDetail" class="text-black">상품 상세내용</label> 
-                                    <textarea rows=10 class="form-control" placeholder="상품 상세내용" th:field="*{itemDetail}" id="floatingTextarea"></textarea>
-                                    <p th:if="${#fields.hasErrors('itemDetail')}" th:errors="*{itemDetail}" class="fieldError">Incorrect Data</p>
-								</div>
-							</div>
-							
-							
-							<div class="form-group row" th:if="${#lists.isEmpty(itemFormDto.itemImgDtoList)}" th:each="num: ${#numbers.sequence(1,5)}">
-								<div class="col-md-12">
-								 	<label for="formFile" class="form-label" th:text="상품이미지 + ${num}"></label>
-  									<input class="form-control" type="file" id="itemImgFile" name="itemImgFile">
+									<label for="formFile" class="form-label"
+										th:text="상품이미지 + ${num}"></label> <input class="form-control"
+										type="file" id="itemImgFile" name="itemImgFile">
 								</div>
 							</div>
 
 							<div class="form-group">
 								<div class="col-md-12 d-flex justify-content-center">
-									<button type="button" onclick="beforeSubmit()" class="btn btn-primary mb-3" style="width:150px;">상품등록</button>
+									<button type="button" onclick="beforeSubmit()"
+										class="btn btn-primary mb-3" style="width: 150px;">상품등록</button>
 								</div>
 							</div>
 
-							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+							<input type="hidden" th:name="${_csrf.parameterName}"
+								th:value="${_csrf.token}">
 						</form>
 					</div>
 				</div>

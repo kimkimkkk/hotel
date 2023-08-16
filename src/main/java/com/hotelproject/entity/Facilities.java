@@ -55,9 +55,6 @@ public class Facilities extends BaseEntity{
 	@Column(nullable = false)
 	private String inquiryCall; // 문의번호
 	
-	@Column(nullable = false)
-	private int stockNumber; // 재고수량 -> stock_number
-	
 	@Lob // clob과 같은 큰타입으로 컬럼을 만든다
 	@Column(nullable = false, columnDefinition = "longtext")
 	private String facilitiesDetail; // 상품상세설명 -> item_detail
@@ -68,7 +65,6 @@ public class Facilities extends BaseEntity{
 	public void updateFacilities(FacilitiesFormDto facilitiesFormDto ) {
 		this.facilitiesNm = facilitiesFormDto.getFacilitiesNm();
 		this.price = facilitiesFormDto.getPrice();
-		this.stockNumber = facilitiesFormDto.getStockNumber();
 		this.facilitiesDetail = facilitiesFormDto.getFacilitiesDetail();
 		this.itemStatus = facilitiesFormDto.getItemStatus();
 		this.startTime = facilitiesFormDto.getStartTime();

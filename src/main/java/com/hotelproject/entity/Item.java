@@ -35,16 +35,13 @@ public class Item extends BaseEntity{
 	private int price; // 가격
 	
 	@Column(nullable = false)
-	private int stockNumber; // 재고수량 -> stock_number
-	
-	@Column(nullable = false)
 	private int roomSize;
 	
 	@Column(nullable = false)
 	private String view;
 	
 	@Column(nullable = false)
-	private String bedSize; // 재고수량 -> stock_number
+	private String bedSize; 
 	
 	
 	
@@ -59,7 +56,6 @@ public class Item extends BaseEntity{
 	public void updateItem(ItemFormDto itemFormDto ) {
 		this.itemNm = itemFormDto.getItemNm();
 		this.price = itemFormDto.getPrice();
-		this.stockNumber = itemFormDto.getStockNumber();
 		this.itemDetail = itemFormDto.getItemDetail();
 		this.itemStatus = itemFormDto.getItemStatus();
 	}

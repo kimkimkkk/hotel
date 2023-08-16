@@ -39,7 +39,6 @@ public class ReservationService {
 
 	public Item setItem(Long itemId) {
 		Item item = itemRepository.findById(itemId).orElseThrow(EntityNotFoundException::new);
-		Facilities facilities = facilitiesRepository.findById(itemId).orElseThrow(EntityNotFoundException::new);
 
 		return item;
 	}

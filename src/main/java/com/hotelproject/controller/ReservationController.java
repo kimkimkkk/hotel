@@ -33,7 +33,6 @@ public class ReservationController {
 	@PostMapping(value = "/order")
 	public String order(@Valid ReservationDto reservationDto, BindingResult bindingResult, Principal principal, @RequestParam("itemId") Long ItemId, @RequestParam("facilitiesId") Long FacilitiesId) {
 		
-		System.out.println("ssssssssssssssss");
 		if (bindingResult.hasErrors()) {
 			StringBuilder sb = new StringBuilder();
 			List<FieldError> fieldErrors = bindingResult.getFieldErrors();
@@ -43,18 +42,17 @@ public class ReservationController {
 			}
 			return "redirect:/";
 		}
-		
 		String email = principal.getName(); // id에 해당하는 정보를 가지고 온다.
 		Long itemId = ItemId;
 		Long facilitiesId = FacilitiesId;
 		// Principal: 로그인한 사용자의 정보를 가져올수있다
         
-        
-        
 		try {
 			if(itemId > 0) {
 				Item item = reservationService.setItem(itemId);
+				System.out.println("xxxxxxxxxxxxxxxxxxxx");
 				reservationDto.setItemId(item);
+				System.out.println("ssssssssssssssss");
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 				LocalDate startDate = LocalDate.parse(reservationDto.getStartDay(), formatter);
 		        LocalDate endDate = LocalDate.parse(reservationDto.getEndDay(), formatter);

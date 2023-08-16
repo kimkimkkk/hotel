@@ -138,8 +138,9 @@
 				</div>
 				<form role="form" action="/order" method="post"
 					th:object="${ReservationDto}">
-					<input type="hidden" th:value="${facilities.id}" name="facilitiesId">
-					<input type="hidden" th:value="0" name="itemId">
+					<input type="hidden" th:value="${facilities.id}"
+						name="facilitiesId"> <input type="hidden" th:value="0"
+						name="itemId">
 					<div class="col-md-6">
 						<span th:text="${facilities.itemStatus}"
 							class="badge badge-primary mgb-15"></span>
@@ -151,8 +152,23 @@
 								th:text="|${#numbers.formatInteger(facilities.price, 0, 'COMMA')}원|"></strong>
 						</p>
 						<div>
-							<label for="startDay">체크인 날짜</label> 
-							<!-- <input type="date" id="checkIn" name="startDay" onchange="calculateTotalPrice()"> -->
+							<label for="startDay">날짜</label> <input type="date"
+								id="checkIn" name="startDay">
+						</div>
+						<div class="mb-5">
+							<div class="form-group row">
+								<div class="col-md-12">
+									<h4 style="padding-top: 50px;">인원 수</h4>
+									<select id="person" onchange="selectBoxChange(this.value)"
+										onclick="calculateTotalPrice()" th:field="*{person}">
+										<option value="1">1명</option>
+										<option value="2">2명</option>
+										<option value="3">3명</option>
+										<option value="4">4명</option>
+										<option value="99">5명 이상은 문의바랍니다.</option>
+									</select>
+								</div>
+							</div>
 						</div>
 						<div>
 							<h5
@@ -237,11 +253,16 @@
 		});
 
 		function calculateTotalPrice() {
-			var count = $("#count").val();//수량
+			var count = $("#person").val();//수량
 			var price = $("#price").val();//가격
 			var totalPrice = (price * count).toLocaleString('ko-KR'); //천단위 콤마
 
+			if (count == '99') {
+				totalPrice = '0';
+				$("#totalPrice").html('문의 바랍니다.'); //총가격 출력
+			}else{
 			$("#totalPrice").html(totalPrice + '원'); //총가격 출력
+			}
 		}
 
 		function order() {

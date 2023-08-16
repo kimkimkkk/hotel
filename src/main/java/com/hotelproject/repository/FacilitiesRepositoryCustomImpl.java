@@ -78,7 +78,7 @@ public class FacilitiesRepositoryCustomImpl implements FacilitiesRepositoryCusto
 										 .where(regDtsAfter(facilitiesSearchDto.getSearchDateType()),
 										 searchSellStatusEq(facilitiesSearchDto.getSearchSellStatus()),
 										 searchByLike(facilitiesSearchDto.getSearchBy(), facilitiesSearchDto.getSearchQuery()))										 
-									 .orderBy(QFacilities.facilities.id.desc())
+										 .orderBy(QFacilities.facilities.id.desc())
 										 .offset(pageable.getOffset())
 										 .limit(pageable.getPageSize())
 										 .fetch();
