@@ -31,11 +31,10 @@ public class InpuryController {
 		String email = principal.getName();
 		model.addAttribute("inquiryDto", new InquiryDto());
 		model.addAttribute("email", email);
-		
-		
-		return "/inquiry/inquiry";
-	}
 	
+		
+		return "inquiry/inquiry";
+	}
 	@PostMapping(value = "/inquirys/inquiry")
 	public String inins(@Valid InquiryDto inquiryDto, BindingResult bindingResult, Model model,Principal principal) {
 		String email = principal.getName();
@@ -64,7 +63,7 @@ public class InpuryController {
 		
 
 		
-		return "/admin/inquirys";
+		return "admin/inquirys";
 	}
 	
 	

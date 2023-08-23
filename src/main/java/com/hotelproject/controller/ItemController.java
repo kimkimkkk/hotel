@@ -1,5 +1,6 @@
 package com.hotelproject.controller;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -135,7 +136,7 @@ public class ItemController {
 		}
 		return "redirect:/";
 	}
-	@GetMapping(value = "/admin/item/delete/{itemId}")
+	@GetMapping(value = "/admin/item/delete/ {itemId}")
 	public String Facilitiesdelete(@PathVariable("itemId") Long itemId, Model model) {
 		reservationService.deletItems(itemId);
 		itemService.deleteByitemIdByNative(itemId);

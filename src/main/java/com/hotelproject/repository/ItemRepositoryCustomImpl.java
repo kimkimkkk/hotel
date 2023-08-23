@@ -106,18 +106,10 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
 
 	@Override
 	public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
-		//   select * from item, item_img, item_img.imgUrl, item.price item.Detail where item.item_id= item_img
-		//   and item_img.repimg_tn = 'y'
-		//   and item.item_nm like '%검색어%'
-		//   oreder by item.item_id desc
 		
 		QItem item = QItem.item;
 		QItemImg itemImg = QItemImg.itemImg;
 		
-		
-		//dto를 객체로 바로 받아올때는 컴럼과 dto객체의 필드가 일치해야한다
-		//2.@QuertProjection을 반드시 사용해야한다.
-		//3.
 		List<MainItemDto> content = queryFactory
 								.select( 
 										new QMainItemDto( 

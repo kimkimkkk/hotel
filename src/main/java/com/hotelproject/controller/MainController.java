@@ -40,7 +40,7 @@ public class MainController {
 		model.addAttribute("facilitiesSearchDto", facilitiesSearchDto);
 		model.addAttribute("items", items);
 		model.addAttribute("itemSearchDto", itemSearchDto);
-		return "/index";
+		return "index";
 	}
 	
 

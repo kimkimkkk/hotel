@@ -111,7 +111,6 @@ public class MemberController {
 	//마이페이지에서 수정한 값 바꾸기
 	@PostMapping(value = "/members/myChange")
 	public String Pwchange(@RequestParam("email") String email,@RequestParam("name") String name,@RequestParam("password") String password ,@RequestParam("address") String address, Model model) throws Exception {
-		System.out.println(password + "asdasdsdsdsds");
 		Member member = new Member();
 		try {
 			member = memberService.findMember(email);

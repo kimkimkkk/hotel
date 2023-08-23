@@ -78,7 +78,6 @@ public class ItemService {
 		// update쿼리문 실행
 		// 앤티티 데이터만 변경해준다.
 		item.updateItem(itemFormDto);
-
 		// 2 item_img를 바꿔준다. -> 5개의 레코드 전부 변경
 		List<Long> itemImgIds = itemFormDto.getItemImgIds(); // 상품 이미지 아이디 리스트 조회
 
@@ -100,9 +99,5 @@ public class ItemService {
 	public void deleteByitemIdByNative(long itemId) {
 		itemRepository.deleteByitemIdByNative(itemId);
 	}
-	/*
-	 * @Transactional(readOnly = true) public List<ItemRankDto> getItemRankList() {
-	 * return itemRepository.getItemRankList(); }
-	 */
 
 }

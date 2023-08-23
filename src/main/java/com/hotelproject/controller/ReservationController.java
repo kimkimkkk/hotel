@@ -50,9 +50,7 @@ public class ReservationController {
 		try {
 			if(itemId > 0) {
 				Item item = reservationService.setItem(itemId);
-				System.out.println("xxxxxxxxxxxxxxxxxxxx");
 				reservationDto.setItemId(item);
-				System.out.println("ssssssssssssssss");
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 				LocalDate startDate = LocalDate.parse(reservationDto.getStartDay(), formatter);
 		        LocalDate endDate = LocalDate.parse(reservationDto.getEndDay(), formatter);
